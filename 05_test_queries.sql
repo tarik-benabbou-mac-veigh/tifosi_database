@@ -40,7 +40,26 @@ SELECT AVG(prix) FROM focaccia;
 
 
 -- 4. Afficher la liste des boissons avec leur marque, triée par nom de boisson :
+SELECT nom_boisson, marque FROM boisson
+ORDER BY nom_boisson;
 
+-- Résultat attendu et obtenu :
++---------------------------+-------------+
+| nom_boisson               | marque      |
++---------------------------+-------------+
+| Capri-sun                 | Coca-cola   |
+| Coca-cola original        | Coca-cola   |
+| Coca-cola zÃ©ro           | Coca-cola   |
+| Eau de source             | Cristalline |
+| Fanta citron              | Coca-cola   |
+| Fanta orange              | Coca-cola   |
+| Lipton Peach              | Pepsico     |
+| Lipton zÃ©ro citron       | Pepsico     |
+| Monster energy ultra blue | Monster     |
+| Monster energy ultra gold | Monster     |
+| Pepsi                     | Pepsico     |
+| Pepsi Max ZÃ©ro           | Pepsico     |
++---------------------------+-------------+
 
 
 -- 5. Afficher la liste des ingrédients pour une Raclaccia :
@@ -76,10 +95,21 @@ ORDER BY focaccia.nom_focaccia;
 | Tradizione      |                  9 |
 +-----------------+--------------------+
 
+
 -- 7. Afficher le nom de la focaccia qui a le plus d'ingrédients :
-SELECT * FROM focaccia
-ORDER BY ingredients DESC
+SELECT nom_focaccia, COUNT(id_ingredient) AS nombre_ingredient FROM focaccia
+INNER JOIN focaccia_ingredient
+ON focaccia.id_focaccia = focaccia_ingredient.id_focaccia
+GROUP BY nom_focaccia
+ORDER BY nom_focaccia
 LIMIT 1;
+
+-- Résultat attendu et obtenu :
++--------------+-------------------+
+| nom_focaccia | nombre_ingredient |
++--------------+-------------------+
+| AmÃ©ricaine  |                 8 |
++--------------+-------------------+
 
 
 -- 8. Afficher la liste des focaccia qui contiennent de l'ail :
@@ -96,7 +126,21 @@ WHERE ingredient LIKE '%ail%';
 |         8 | Paysanne        | 12.80 | Base crÃ¨me, ChÃ¨vre, cresson, pomme de terre, jambon fumÃ©, ail, artichaut, champignon, parmesan, poivre, olive noire, Å?uf |
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+
 -- 9. Afficher la liste des ingrédients inutilisés :
+SELECT * FROM ingredient
+LEFT OUTER JOIN focaccia_ingredient
+ON focaccia_ingredient.id_ingredient = ingredient.id_ingredient
+WHERE focaccia_ingredient.id_ingredient IS NULL;
+
+-- Résultat attendu et obtenu :
++---------------+----------------+----------+-------------+---------------+
+| id_ingredient | nom_ingredient | quantite | id_focaccia | id_ingredient |
++---------------+----------------+----------+-------------+---------------+
+|            23 | Salami         | 80       |        NULL |          NULL |
+|            24 | Tomate cerise  | 40       |        NULL |          NULL |
++---------------+----------------+----------+-------------+---------------+
+
 
 
 -- 10. Afficher la liste des focaccia qui n'ont pas de champignons :
