@@ -1,10 +1,16 @@
 -- Création de différentes tables ---
-
 -- Table focaccia :
 CREATE TABLE focaccia(
     id_focaccia INT AUTO_INCREMENT PRIMARY KEY,
     nom_focaccia VARCHAR(50) unique NOT NULL,
-    prix DECIMAL(5,2) NOT NULL,
+    prix DECIMAL(5,2) NOT NULL
+);
+
+-- Table ingredient :
+CREATE TABLE ingredient(
+    id_ingredient INT AUTO_INCREMENT PRIMARY KEY,
+    nom_ingredient VARCHAR(255) NOT NULL,
+    quantite VARCHAR(5) NOT NULL
 );
 
 -- Table pour joindre focaccia et ingredient : 
@@ -17,11 +23,10 @@ CREATE TABLE focaccia_ingredient (
 );
 -- (utilisation à la fois de clé primaire/étrangère car il c'est une table liée à 2 autres)
 
--- Table ingredient :
-CREATE TABLE ingredient(
-    id_ingredient INT AUTO_INCREMENT PRIMARY KEY,
-    nom_ingredient VARCHAR(255) NOT NULL,
-    quantite VARCHAR(5) NOT NULL
+-- Table marque :
+CREATE TABLE marque(
+    id_marque INT AUTO_INCREMENT PRIMARY KEY,
+    nom_marque VARCHAR(50) unique NOT NULL
 );
 
 -- Table boisson :
@@ -33,24 +38,18 @@ CREATE TABLE boisson(
     FOREIGN KEY (id_marque) REFERENCES marque(id_marque) 
 );
 
--- Table marque :
-CREATE TABLE marque(
-    id_marque INT AUTO_INCREMENT PRIMARY KEY,
-    nom_marque VARCHAR(50) unique NOT NULL
-);
-
 -- Table client :
 CREATE TABLE client(
     id_client INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(50) NOT NULL unique,
     email VARCHAR(150) NOT NULL unique,
-    code_postal INT NOT NULL,
+    code_postal INT NOT NULL
 );
 
 -- Table menu : 
 CREATE TABLE menu(
     id_menu INT AUTO_INCREMENT PRIMARY KEY,
-    id_client INT AUTO_INCREMENT,
+    id_client INT,
     date_achat DATETIME NOT NULL,
     FOREIGN KEY (id_client) REFERENCES client(id_client)
 );
@@ -65,4 +64,4 @@ CREATE TABLE commande(
     FOREIGN KEY (id_focaccia) REFERENCES focaccia(id_focaccia),
     FOREIGN KEY (id_boisson) REFERENCES boisson(id_boisson)
 );
--- (utilisation à la fois de clé primaire/étrangère car il c'est une table liée à 3 autres)
+-- (utilisation à la fois de clé primaire/étrangère car c'est une table liée à 3 autres)
