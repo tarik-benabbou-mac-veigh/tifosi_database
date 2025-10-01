@@ -25,7 +25,7 @@ Vous trouverez aussi les contraintes d'intégrité pour les tables de jointures 
 Pour utiliser cette base de données en local, suivez les étapes ci-dessous :
 
 - **Clonez le dépôt GitHub :**
-git clone [https://github.com/votre-nom-utilisateur/nom-du-depot.git](https://github.com/tarik-benabbou-mac-veigh/tifosi_database.git) 
+git clone https://github.com/tarik-benabbou-mac-veigh/tifosi_database.git
 
 - **Ouvrez MySQL Workbench**
 
